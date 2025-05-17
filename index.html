@@ -3,111 +3,233 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tic Tac Toe</title>
-    <link rel="stylesheet" href="./style.css" />
 
+    <title>Play Tic Tac Toe Game Online | Fun JavaScript XO Game</title>
+    <meta
+      name="description"
+      content="Play the most exciting Tic Tac Toe game online! Built with HTML, CSS, and JavaScript. Enjoy Single or Two Player mode, score tracking, star ratings & more." />
+    <meta
+      name="keywords"
+      content="Tic Tac Toe, Tic Tac Toe Game, XO Game, Play Tic Tac Toe Online, JavaScript Games, HTML CSS Game, Single Player XO, Two Player Game" />
+    <meta name="author" content="Crafted by Nouman" />
+
+    <!-- Open Graph Meta Tags -->
+    <meta
+      property="og:title"
+      content="Play Tic Tac Toe Game Online | Fun JavaScript XO Game" />
+    <meta
+      property="og:description"
+      content="Play single or two-player Tic Tac Toe game online with animations, scores, and screenshot sharing. A stylish JavaScript XO game." />
+    <meta
+      property="og:url"
+      content="https://crafted-by-nouman.github.io/Tik-Tak-Toe/" />
+    <meta
+      property="og:image"
+      content="https://crafted-by-nouman.github.io/Tik-Tak-Toe/assets/preview.jpg" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Play Tic Tac Toe Game Online | JavaScript XO Game" />
+    <meta
+      name="twitter:description"
+      content="Enjoy a sleek and fun Tic Tac Toe game built with HTML, CSS, and JavaScript. Challenge your friends or play solo!" />
+    <meta
+      name="twitter:image"
+      content="https://crafted-by-nouman.github.io/Tik-Tak-Toe/assets/preview.jpg" />
+
+    <link
+      rel="canonical"
+      href="https://crafted-by-nouman.github.io/Tik-Tak-Toe/" />
+    <link rel="stylesheet" href="./style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   </head>
   <body>
-    <div class="floating-shapes" id="shapes-container"></div>
+    <main>
+      <div
+        class="floating-shapes"
+        id="shapes-container"
+        aria-hidden="true"></div>
 
-    <!-- Home Screen -->
-    <div class="screen home-screen" id="home-screen">
-      <h1>TIC TAC TOE</h1>
-      <!-- <div class="subtitle">The most exciting version ever created!</div> -->
+      <!-- Home Screen -->
+      <section class="screen home-screen" id="home-screen">
+        <h1>TIC TAC TOE</h1>
+        <p class="visually-hidden">
+          Play Tic Tac Toe online game in your browser - built by Nouman using
+          JavaScript
+        </p>
 
-      <div class="mode-select">
-        <button class="mode-btn active" id="single-player-btn">
-          <i class="fas fa-user"></i>
-          <span>Single Player</span>
-        </button>
-        <button class="mode-btn" id="multi-player-btn">
-          <i class="fas fa-users"></i>
-          <span>Two Players</span>
-        </button>
-      </div>
-
-      <div class="player-select" id="player-select">
-        <button class="player-btn player-x active" id="player-x">
-          Play as X
-        </button>
-        <button class="player-btn player-o" id="player-o">Play as O</button>
-      </div>
-
-      <button class="btn btn-accent" id="start-btn">Start Game</button>
-    </div>
-
-    <!-- Game Screen -->
-    <div class="screen game-screen" id="game-screen">
-      <h1>TIC TAC TOE</h1>
-      <div class="subtitle" id="game-subtitle">Player X's turn</div>
-
-      <div class="game-container">
-        <div class="board" id="board">
-          <div class="cell" data-index="0"></div>
-          <div class="cell" data-index="1"></div>
-          <div class="cell" data-index="2"></div>
-          <div class="cell" data-index="3"></div>
-          <div class="cell" data-index="4"></div>
-          <div class="cell" data-index="5"></div>
-          <div class="cell" data-index="6"></div>
-          <div class="cell" data-index="7"></div>
-          <div class="cell" data-index="8"></div>
-        </div>
-      </div>
-
-      <!-- <div class="status" id="status">Your turn! Place your mark</div> -->
-      <button class="btn btn-dark" id="back-btn">Back to Home</button>
-    </div>
-
-    <!-- Countdown Screen -->
-    <div class="screen countdown-screen" id="countdown-screen">
-      <div class="countdown" id="countdown">3</div>
-      <div class="subtitle">Get ready to play!</div>
-    </div>
-
-    <!-- Result Screen -->
-    <div class="screen result-screen" id="result-screen">
-      <div class="result-content">
-        <div id="winner-text" class="winner-text">Player X Wins!</div>
-        <div id="draw-text" class="draw-text" style="display: none">
-          Game Draw!
+        <div class="mode-select" aria-label="Select Game Mode">
+          <button
+            class="mode-btn active"
+            id="single-player-btn"
+            aria-label="Single Player Mode">
+            <i class="fas fa-user"></i>
+            <span>Single Player</span>
+          </button>
+          <button
+            class="mode-btn"
+            id="multi-player-btn"
+            aria-label="Two Player Mode">
+            <i class="fas fa-users"></i>
+            <span>Two Players</span>
+          </button>
         </div>
 
-        <div class="player-result">
-          <div class="player-card">
-            <div class="player-name">Player X</div>
-            <div class="player-score" id="player-x-score">1</div>
+        <div
+          class="player-select"
+          id="player-select"
+          aria-label="Choose Player">
+          <button class="player-btn player-x active" id="player-x">
+            Play as X
+          </button>
+          <button class="player-btn player-o" id="player-o">Play as O</button>
+        </div>
+
+        <button class="btn btn-accent" id="start-btn">Start Game</button>
+      </section>
+
+      <!-- Game Screen -->
+      <section class="screen game-screen" id="game-screen">
+        <h2>TIC TAC TOE</h2>
+        <div class="subtitle" id="game-subtitle">Player X's turn</div>
+
+        <div
+          class="game-container"
+          role="grid"
+          aria-label="Tic Tac Toe Game Board">
+          <div class="board" id="board">
+            <div
+              class="cell"
+              data-index="0"
+              role="button"
+              tabindex="0"
+              aria-label="Cell 1"></div>
+            <div
+              class="cell"
+              data-index="1"
+              role="button"
+              tabindex="0"
+              aria-label="Cell 2"></div>
+            <div
+              class="cell"
+              data-index="2"
+              role="button"
+              tabindex="0"
+              aria-label="Cell 3"></div>
+            <div
+              class="cell"
+              data-index="3"
+              role="button"
+              tabindex="0"
+              aria-label="Cell 4"></div>
+            <div
+              class="cell"
+              data-index="4"
+              role="button"
+              tabindex="0"
+              aria-label="Cell 5"></div>
+            <div
+              class="cell"
+              data-index="5"
+              role="button"
+              tabindex="0"
+              aria-label="Cell 6"></div>
+            <div
+              class="cell"
+              data-index="6"
+              role="button"
+              tabindex="0"
+              aria-label="Cell 7"></div>
+            <div
+              class="cell"
+              data-index="7"
+              role="button"
+              tabindex="0"
+              aria-label="Cell 8"></div>
+            <div
+              class="cell"
+              data-index="8"
+              role="button"
+              tabindex="0"
+              aria-label="Cell 9"></div>
           </div>
-          <div class="player-card">
-            <div class="player-name">Player O</div>
-            <div class="player-score" id="player-o-score">0</div>
+        </div>
+
+        <button class="btn btn-dark" id="back-btn">Back to Home</button>
+      </section>
+
+      <!-- Countdown Screen -->
+      <section class="screen countdown-screen" id="countdown-screen">
+        <div class="countdown" id="countdown">3</div>
+        <div class="subtitle">Get ready to play!</div>
+      </section>
+
+      <!-- Result Screen -->
+      <section class="screen result-screen" id="result-screen">
+        <div class="result-content">
+          <div id="winner-text" class="winner-text">Player X Wins!</div>
+          <div id="draw-text" class="draw-text" style="display: none">
+            Game Draw!
+          </div>
+
+          <div class="player-result">
+            <div class="player-card">
+              <div class="player-name">Player X</div>
+              <div class="player-score" id="player-x-score">1</div>
+            </div>
+            <div class="player-card">
+              <div class="player-name">Player O</div>
+              <div class="player-score" id="player-o-score">0</div>
+            </div>
+          </div>
+
+          <div class="rating" aria-label="Rate the game">
+            <span class="star" data-rating="1" aria-label="1 star"
+              ><i class="fas fa-star"></i
+            ></span>
+            <span class="star" data-rating="2" aria-label="2 stars"
+              ><i class="fas fa-star"></i
+            ></span>
+            <span class="star" data-rating="3" aria-label="3 stars"
+              ><i class="fas fa-star"></i
+            ></span>
+            <span class="star" data-rating="4" aria-label="4 stars"
+              ><i class="fas fa-star"></i
+            ></span>
+            <span class="star" data-rating="5" aria-label="5 stars"
+              ><i class="fas fa-star"></i
+            ></span>
+          </div>
+
+          <div class="action-buttons">
+            <button
+              class="btn btn-primary"
+              id="share-btn"
+              aria-label="Share your game">
+              <i class="fas fa-share-alt"></i> Share
+            </button>
+            <button
+              class="btn btn-secondary"
+              id="screenshot-btn"
+              aria-label="Take screenshot">
+              <i class="fas fa-camera"></i> Screenshot
+            </button>
+            <button
+              class="btn btn-dark"
+              id="home-btn"
+              aria-label="Go back home">
+              <i class="fas fa-home"></i> Home
+            </button>
           </div>
         </div>
+      </section>
+    </main>
 
-        <div class="rating">
-          <span class="star" data-rating="1"><i class="fas fa-star"></i></span>
-          <span class="star" data-rating="2"><i class="fas fa-star"></i></span>
-          <span class="star" data-rating="3"><i class="fas fa-star"></i></span>
-          <span class="star" data-rating="4"><i class="fas fa-star"></i></span>
-          <span class="star" data-rating="5"><i class="fas fa-star"></i></span>
-        </div>
-
-        <div class="action-buttons">
-          <button class="btn btn-primary" id="share-btn">
-            <i class="fas fa-share-alt"></i> Share
-          </button>
-          <button class="btn btn-secondary" id="screenshot-btn">
-            <i class="fas fa-camera"></i> Screenshot
-          </button>
-          <button class="btn btn-dark" id="home-btn">
-            <i class="fas fa-home"></i> Home
-          </button>
-        </div>
-      </div>
-    </div>
     <script src="./script.js"></script>
   </body>
 </html>
