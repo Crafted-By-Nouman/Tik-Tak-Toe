@@ -149,22 +149,76 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // AI move
+  // Enhanced AI move
   function makeAIMove() {
     if (!gameActive || !isSinglePlayer || currentPlayer === humanPlayer) return;
 
-    // Simple AI - random move
-    let emptyCells = gameState
-      .map((cell, index) => (cell === "" ? index : null))
-      .filter((val) => val !== null);
-    if (emptyCells.length > 0) {
-      const randomIndex =
-        emptyCells[Math.floor(Math.random() * emptyCells.length)];
-      const cell = document.querySelector(`.cell[data-index="${randomIndex}"]`);
-
-      handleCellPlayed(cell, randomIndex);
-      handleResultValidation();
+    // Check for winning move
+    let move = findWinningMove(currentPlayer);
+    if (move !== -1) {
+      makeMove(move);
+      return;
     }
+
+    // Check if opponent can win next move and block them
+    move = findWinningMove(humanPlayer);
+    if (move !== -1) {
+      makeMove(move);
+      return;
+    }
+
+    // Take center if available
+    if (gameState[4] === "") {
+      makeMove(4);
+      return;
+    }
+
+    // Take a corner if available
+    const corners = [0, 2, 6, 8];
+    const availableCorners = corners.filter((index) => gameState[index] === "");
+    if (availableCorners.length > 0) {
+      const randomCorner =
+        availableCorners[Math.floor(Math.random() * availableCorners.length)];
+      makeMove(randomCorner);
+      return;
+    }
+
+    // Take any available edge
+    const edges = [1, 3, 5, 7];
+    const availableEdges = edges.filter((index) => gameState[index] === "");
+    if (availableEdges.length > 0) {
+      const randomEdge =
+        availableEdges[Math.floor(Math.random() * availableEdges.length)];
+      makeMove(randomEdge);
+      return;
+    }
+  }
+
+  // Helper function to find a winning move for a player
+  function findWinningMove(player) {
+    for (let i = 0; i < winningConditions.length; i++) {
+      const [a, b, c] = winningConditions[i];
+      const values = [gameState[a], gameState[b], gameState[c]];
+
+      // Count how many spots are taken by the player and how many are empty
+      const playerCount = values.filter((val) => val === player).length;
+      const emptyCount = values.filter((val) => val === "").length;
+
+      if (playerCount === 2 && emptyCount === 1) {
+        // This is a winning move - return the empty spot
+        if (gameState[a] === "") return a;
+        if (gameState[b] === "") return b;
+        if (gameState[c] === "") return c;
+      }
+    }
+    return -1; // No winning move found
+  }
+
+  // Helper function to make a move
+  function makeMove(index) {
+    const cell = document.querySelector(`.cell[data-index="${index}"]`);
+    handleCellPlayed(cell, index);
+    handleResultValidation();
   }
 
   // Handle cell played
@@ -197,8 +251,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (roundWon) {
-      status.textContent = `Player ${currentPlayer} wins!`;
-      gameSubtitle.textContent = `Player ${currentPlayer} wins!`;
+      if (status) status.textContent = `Player ${currentPlayer} wins!`;
+      if (gameSubtitle)
+        gameSubtitle.textContent = `Player ${currentPlayer} wins!`;
       gameActive = false;
 
       // Update scores
@@ -209,8 +264,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Check for draw
     if (!gameState.includes("")) {
-      status.textContent = "Game ended in a draw!";
-      gameSubtitle.textContent = "Game ended in a draw!";
+      if (status) status.textContent = "Game ended in a draw!";
+      if (gameSubtitle) gameSubtitle.textContent = "Game ended in a draw!";
       gameActive = false;
       showResultScreen(null);
       return;
@@ -218,8 +273,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Switch player
     currentPlayer = currentPlayer === "X" ? "O" : "X";
-    status.textContent = `Player ${currentPlayer}'s turn`;
-    gameSubtitle.textContent = `Player ${currentPlayer}'s turn`;
+    if (status) status.textContent = `Player ${currentPlayer}'s turn`;
+    if (gameSubtitle)
+      gameSubtitle.textContent = `Player ${currentPlayer}'s turn`;
   }
 
   // Reset game
@@ -229,18 +285,20 @@ document.addEventListener("DOMContentLoaded", () => {
     gameState = ["", "", "", "", "", "", "", "", ""];
 
     if (isSinglePlayer) {
-      status.textContent =
-        humanPlayer === "X" ? "Your turn! Place your X" : "AI is thinking...";
-      gameSubtitle.textContent =
-        humanPlayer === "X" ? "Your turn! Place your X" : "AI is thinking...";
+      if (status)
+        status.textContent =
+          humanPlayer === "X" ? "Your turn! Place your X" : "AI is thinking...";
+      if (gameSubtitle)
+        gameSubtitle.textContent =
+          humanPlayer === "X" ? "Your turn! Place your X" : "AI is thinking...";
 
       // If human is O, AI makes first move
       if (humanPlayer === "O") {
         setTimeout(makeAIMove, 800);
       }
     } else {
-      status.textContent = "Player X's turn";
-      gameSubtitle.textContent = "Player X's turn";
+      if (status) status.textContent = "Player X's turn";
+      if (gameSubtitle) gameSubtitle.textContent = "Player X's turn";
     }
 
     cells.forEach((cell) => {
@@ -253,16 +311,18 @@ document.addEventListener("DOMContentLoaded", () => {
   // Show result screen
   function showResultScreen(winner) {
     // Update scores
-    playerXScore.textContent = scores.X;
-    playerOScore.textContent = scores.O;
+    if (playerXScore) playerXScore.textContent = scores.X;
+    if (playerOScore) playerOScore.textContent = scores.O;
 
     if (winner) {
-      winnerText.textContent = `Player ${winner} Wins!`;
-      winnerText.style.display = "block";
-      drawText.style.display = "none";
+      if (winnerText) {
+        winnerText.textContent = `Player ${winner} Wins!`;
+        winnerText.style.display = "block";
+      }
+      if (drawText) drawText.style.display = "none";
     } else {
-      winnerText.style.display = "none";
-      drawText.style.display = "block";
+      if (winnerText) winnerText.style.display = "none";
+      if (drawText) drawText.style.display = "block";
     }
 
     // Reset rating
@@ -279,6 +339,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function createConfetti() {
     const colors = ["#ff6b6b", "#4ecdc4", "#ffe66d", "#ffffff"];
     const container = document.querySelector(".result-content");
+
+    if (!container) return;
 
     for (let i = 0; i < 100; i++) {
       const confetti = document.createElement("div");
@@ -312,18 +374,21 @@ document.addEventListener("DOMContentLoaded", () => {
   // Change player
   function changePlayer(player) {
     humanPlayer = player;
-    playerXBtn.classList.toggle("active", player === "X");
-    playerOBtn.classList.toggle("active", player === "O");
+    if (playerXBtn) playerXBtn.classList.toggle("active", player === "X");
+    if (playerOBtn) playerOBtn.classList.toggle("active", player === "O");
   }
 
   // Change game mode
   function changeGameMode(mode) {
     isSinglePlayer = mode === "single";
-    singlePlayerBtn.classList.toggle("active", isSinglePlayer);
-    multiPlayerBtn.classList.toggle("active", !isSinglePlayer);
+    if (singlePlayerBtn)
+      singlePlayerBtn.classList.toggle("active", isSinglePlayer);
+    if (multiPlayerBtn)
+      multiPlayerBtn.classList.toggle("active", !isSinglePlayer);
 
     // Show player selection only in single player mode
-    playerSelect.style.display = isSinglePlayer ? "flex" : "none";
+    if (playerSelect)
+      playerSelect.style.display = isSinglePlayer ? "flex" : "none";
   }
 
   // Set rating
@@ -378,20 +443,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Event listeners
   cells.forEach((cell) => cell.addEventListener("click", handleCellClick));
-  startBtn.addEventListener("click", startGameWithCountdown);
-  backBtn.addEventListener("click", () => showScreen("home"));
-  homeBtn.addEventListener("click", () => {
-    showScreen("home");
-    scores = { X: 0, O: 0 }; // Reset scores when going home
-  });
-  shareBtn.addEventListener("click", shareGame);
-  screenshotBtn.addEventListener("click", takeScreenshot);
+  if (startBtn) startBtn.addEventListener("click", startGameWithCountdown);
+  if (backBtn) backBtn.addEventListener("click", () => showScreen("home"));
+  if (homeBtn)
+    homeBtn.addEventListener("click", () => {
+      showScreen("home");
+      scores = { X: 0, O: 0 }; // Reset scores when going home
+    });
+  if (shareBtn) shareBtn.addEventListener("click", shareGame);
+  if (screenshotBtn) screenshotBtn.addEventListener("click", takeScreenshot);
 
-  playerXBtn.addEventListener("click", () => changePlayer("X"));
-  playerOBtn.addEventListener("click", () => changePlayer("O"));
+  if (playerXBtn) playerXBtn.addEventListener("click", () => changePlayer("X"));
+  if (playerOBtn) playerOBtn.addEventListener("click", () => changePlayer("O"));
 
-  singlePlayerBtn.addEventListener("click", () => changeGameMode("single"));
-  multiPlayerBtn.addEventListener("click", () => changeGameMode("multi"));
+  if (singlePlayerBtn)
+    singlePlayerBtn.addEventListener("click", () => changeGameMode("single"));
+  if (multiPlayerBtn)
+    multiPlayerBtn.addEventListener("click", () => changeGameMode("multi"));
 
   stars.forEach((star) => {
     star.addEventListener("click", (e) => {
