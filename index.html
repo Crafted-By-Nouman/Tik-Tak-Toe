@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="./style.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  </head>
+  <body>
+    <div class="floating-shapes" id="shapes-container"></div>
+
+    <!-- Home Screen -->
+    <div class="screen home-screen" id="home-screen">
+      <h1>TIC TAC TOE</h1>
+      <!-- <div class="subtitle">The most exciting version ever created!</div> -->
+
+      <div class="mode-select">
+        <button class="mode-btn active" id="single-player-btn">
+          <i class="fas fa-user"></i>
+          <span>Single Player</span>
+        </button>
+        <button class="mode-btn" id="multi-player-btn">
+          <i class="fas fa-users"></i>
+          <span>Two Players</span>
+        </button>
+      </div>
+
+      <div class="player-select" id="player-select">
+        <button class="player-btn player-x active" id="player-x">
+          Play as X
+        </button>
+        <button class="player-btn player-o" id="player-o">Play as O</button>
+      </div>
+
+      <button class="btn btn-accent" id="start-btn">Start Game</button>
+    </div>
+
+    <!-- Game Screen -->
+    <div class="screen game-screen" id="game-screen">
+      <h1>TIC TAC TOE</h1>
+      <div class="subtitle" id="game-subtitle">Player X's turn</div>
+
+      <div class="game-container">
+        <div class="board" id="board">
+          <div class="cell" data-index="0"></div>
+          <div class="cell" data-index="1"></div>
+          <div class="cell" data-index="2"></div>
+          <div class="cell" data-index="3"></div>
+          <div class="cell" data-index="4"></div>
+          <div class="cell" data-index="5"></div>
+          <div class="cell" data-index="6"></div>
+          <div class="cell" data-index="7"></div>
+          <div class="cell" data-index="8"></div>
+        </div>
+      </div>
+
+      <div class="status" id="status">Your turn! Place your mark</div>
+      <button class="btn btn-dark" id="back-btn">Back to Home</button>
+    </div>
+
+    <!-- Countdown Screen -->
+    <div class="screen countdown-screen" id="countdown-screen">
+      <div class="countdown" id="countdown">3</div>
+      <div class="subtitle">Get ready to play!</div>
+    </div>
+
+    <!-- Result Screen -->
+    <div class="screen result-screen" id="result-screen">
+      <div class="result-content">
+        <div id="winner-text" class="winner-text">Player X Wins!</div>
+        <div id="draw-text" class="draw-text" style="display: none">
+          Game Draw!
+        </div>
+
+        <div class="player-result">
+          <div class="player-card">
+            <div class="player-name">Player X</div>
+            <div class="player-score" id="player-x-score">1</div>
+          </div>
+          <div class="player-card">
+            <div class="player-name">Player O</div>
+            <div class="player-score" id="player-o-score">0</div>
+          </div>
+        </div>
+
+        <div class="rating">
+          <span class="star" data-rating="1"><i class="fas fa-star"></i></span>
+          <span class="star" data-rating="2"><i class="fas fa-star"></i></span>
+          <span class="star" data-rating="3"><i class="fas fa-star"></i></span>
+          <span class="star" data-rating="4"><i class="fas fa-star"></i></span>
+          <span class="star" data-rating="5"><i class="fas fa-star"></i></span>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn btn-primary" id="share-btn">
+            <i class="fas fa-share-alt"></i> Share
+          </button>
+          <button class="btn btn-secondary" id="screenshot-btn">
+            <i class="fas fa-camera"></i> Screenshot
+          </button>
+          <button class="btn btn-dark" id="home-btn">
+            <i class="fas fa-home"></i> Home
+          </button>
+        </div>
+      </div>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>
